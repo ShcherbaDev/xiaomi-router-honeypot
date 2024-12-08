@@ -18,11 +18,11 @@ Local page (look at the URL address):
 
 1. Clone the repository
 2. Install dependencies with `npm install`
-3. In project root, create a `.env` file with these values:
+3. In project root, create a `.env` file with these keys:
 
 ```
-EMAIL_ADDRESS=YOUR_EMAIL
-EMAIL_PASSWORD=YOUR_EMAIL_APP_PASSWORD
+EMAIL_ADDRESS=
+EMAIL_PASSWORD=
 ```
 
 Note: if you use Gmail as an email provider, generate an app password here: <https://myaccount.google.com/apppasswords>
