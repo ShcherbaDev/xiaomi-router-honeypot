@@ -4,6 +4,8 @@ Replicates the login page of the MiWi-Fi Router.
 
 On login requests, it always throws an invalid credentials error, sends an email notification, and logs client information into a file.
 
+Also, it checks some ports for scanning.
+
 ## Screenshots
 
 Original MiWi-Fi page:
@@ -23,6 +25,7 @@ Local page (look at the URL address):
 ```
 EMAIL_ADDRESS=
 EMAIL_PASSWORD=
+EMAIL_SEND_TO=
 ```
 
 Note: if you use Gmail as an email provider, generate an app password here: <https://myaccount.google.com/apppasswords>
