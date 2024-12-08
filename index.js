@@ -66,7 +66,7 @@ app.post('/cgi-bin/luci/api/xqsystem/login', async (request, response) => {
 				<li><b>Timestamp:</b> ${timestamp}</li>
 				<li><b>IP:</b> ${ip}</li>
 				<li><b>MAC:</b> ${mac}</li>
-				<li><>User Agent:</b> ${userAgent}</li>
+				<li><b>User Agent:</b> ${userAgent}</li>
 				<li><b>Request body:</b> ${JSON.stringify(body)}</li>
 			</ul>`
 	}, (error, mail) => {
