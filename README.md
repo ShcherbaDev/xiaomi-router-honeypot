@@ -8,11 +8,11 @@ On login requests, it always throws an invalid credentials error, sends an email
 
 Original MiWi-Fi page:
 
-![[docs/original.png]]
+![Original login page](docs/original.png)
 
 Local page (look at the URL address):
 
-![[docs/local.png]]
+![Replicated login page](docs/local.png)
 
 ## Set up
 
