@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<!-- LOGIN PAGE -->
+<!--[if lt IE 7]><html class="ie6 oldie" lang="zh"><![endif]-->
+<!--[if IE 7]><html class="ie7 oldie" lang="zh"><![endif]-->
+<!--[if IE 8]><html class="ie8 oldie" lang="zh"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh"><!--<![endif]-->
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="edge">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="renderer" content="webkit">
+	<!--[if lt IE 7]>
+<meta http-equiv="refresh" content="0; url=http://miwifi.com/cgi-bin/luci/web/ieblock" />
+<![endif]-->
+	<!--[if gte IE 9]>
+<style>
+body {
+   filter: none;
+}
+</style>
+<![endif]-->
+	<title>MiWi-Fi Router</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link href="/bc.css" rel="stylesheet">
+	<link href="/login.css" rel="stylesheet">
+	<link href="/guide.css" rel="stylesheet">
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="8.926.0" data-gr-ext-installed="">
+	<div id="doc">
+		<div id="hd">
+		</div>
+		<div id="bd">
+			<div class="mod-login" id="admin-PC" style="">
+				<div class="title">
+					Hi there!
+				</div>
+				<!-- <div class="pic">
+                <img src="/xiaoqiang/web/img/topograph/router_r2350_101.png" >
+            </div> -->
+				<!-- <div class="rtname">
+                Xiaomi_9772
+            </div> -->
+				<div class="detail">
+					Download the MiWiFi App to manage your router
+				</div>
+				<div class="download">
+					<div class="code"></div>
+				</div>
+				<div class="tip">
+					Using MiWiFi App eliminates the trouble of having to remember a password
+				</div>
+				<form id="rtloginform" name="rtloginform" method="post" class="form-login">
+					<div class="form-item">
+						<span class="v"><input id="password" class="ipt-text" type="password" name="router_password"
+								autocomplete="off" placeholder="Enter admin password"
+								reqmsg="Enter admin password"></span>
+						<em class="t"></em>
+					</div>
+					<div class="form-contral">
+						<a id="btnRtSubmit" class="btn-login"></a>
+					</div>
+				</form>
+				<div class="mobile-ft">
+					<p>
+						<a target="_blank" href="http://www1.miwifi.com/">Official site</a>
+					</p>
+				</div>
+			</div>
+
+			<div class="mod-guide mod-guide-admin mod-guide-phone" id="admin-mob" style="display:none;">
+				<p class="tit font18">使用小米WiFi APP管理您的路由器</p>
+				<div class="hr"></div>
+				<ul class="info pic-line clearfix">
+					<li>
+						<div class="ico wifi"></div>
+						<div>易用</div>
+						<div class="des">全新小米WiFi APP 极简操作，享受生活</div>
+					</li>
+					<li>
+						<div class="ico safe"></div>
+						<div>安全</div>
+						<div class="des">7x24小时安全防护 一键拉黑蹭网老王</div>
+					</li>
+					<li>
+						<div class="ico gamespeedup"></div>
+						<div>加速</div>
+						<div class="des">提高带宽，游戏加速 团战胜人一筹</div>
+					</li>
+					<li>
+
+						<div class="ico money"></div>
+						<div>赚钱</div>
+						<div class="des">分享WiFi赚点钱 欢迎老王来蹭网</div>
+					</li>
+				</ul>
+
+				<a href="" id="install" class="btn btn-primary btn-block mgtp"><span>现在安装</span></a>
+				<a href="miwifi://tab?tab=0&amp;subtab=0" id="open"
+					class="btn btn-primary btn-block"><span>我已安装，现在打开</span></a>
+				<!-- <div class="notice"><span><i></i>不支持手机端网页管理路由器4</span></div> -->
+				<div class="notice"><span>本地管理小米路由器</span></div>
+			</div>
+		</div>
+
+		<div id="ft">
+			<p>© 2020 MiWi-Fi Router</p>
+			<p>
+			</p>
+		</div>
+
+	</div>
+
+	<!--[if lt IE 7]>
+<script>
+try{ document.execCommand("BackgroundImageCache",false,true);} catch(e){}
+</script>
+<![endif]-->
+	<div class="mask-menu" id="maskMenu"
+		style="position:fixed;left:0;top:0; width:100%; height:100%; z-index:2; display:none;"></div>
+	<div id="dropmenu" class="dropmenu" style="z-index:3; display:none;">
+		<ul>
+			<li><a href="#" id="toRename">Change router name</a></li>
+
+			<li><a href="http://192.168.31.1/cgi-bin/luci/web/setting/upgrade">System update</a></li>
+
+			<li><a href="#" id="toDownloadClient">Download app</a></li>
+			<li><a href="#" id="toReboot">Reboot</a></li>
+
+			<li class="last"><a href="http://192.168.31.1/cgi-bin/luci/web/logout">Sign out</a></li>
+		</ul>
+	</div>
+	<div id="noticebar" class="noticebar" style="z-index:3; display:none;">
+		<i class="ico-arrow"></i>
+		<div class="content"></div>
+	</div>
+	<script>
+		var i18n = {};
+		i18n.dialog = {
+			ok: 'OK',
+			cancel: 'Cancel',
+			loading: 'Loading…',
+			dlgtitle: 'Message box'
+		};
+		i18n.valid = {
+			n_integer: 'Enter a complete {$0}',
+			n_format: 'Use the following format &#34;{$0}&#34;',
+			n_upper: 'Enter up to {$0}', //注意：{$0}表示允许值，{$1}表示实际值
+			n_lower: 'Use {$0} characters or more',
+			n_negative: '请输入一个2位负整数。',
+			nrange_from: 'The range you entered is invalid',
+			nrange_to: 'The range you entered is invalid',
+			n_useless_zero: 'Looks like there&#39;s an additional &#34;0&#34; at the beginning of the value you entered.',
+			d_format: 'Date format: YYYY-MM-DD',
+			d_upper: 'Date can&#39;t be later than {$0}',
+			d_lower: 'Date can&#39;t be earlier than {$0}',
+			daterange_from: 'Start date can&#39;t be later than end date.',
+			daterange_to: 'End date can&#39;t be earlier than start date',
+			daterange_larger_span: "Can&#39;t exceed {$0} days",
+			text_longer: 'Use {$0} characters or less', //'{$1}字太多，最多允许{$0}字'
+			text_shorter: 'Enter {$0} characters or more', //'{$1}字太少，最少允许{$0}字'
+			bytetext_longer: 'Use {$0} characters or less', //'{$1}字节太多，最多允许{$0}字节'
+			bytetext_shorter: 'Enter {$0} characters or more', //'{$1}字节太少，最少允许{$0}字节'
+			richtext_longer: 'Use {$0} characters or less',
+			richtext_shorter: 'Enter {$0} characters or more',
+			_reconfirm: 'Passwords don&#39;t match.',
+			_time: 'The format of the date you entered is invalid.',
+			_minute: 'The format of the date you entered is invalid.',
+			_email: 'Check the email address you entered',
+			_mobilecode: 'Check the phone number you entered',
+			_phone: 'Check the phone number you entered',
+			_phonewithext: 'Check the phone number you entered',
+			_phonezone: 'Check the area code you entered',
+			_phonecode: 'Check the phone number you entered',
+			_phoneext: 'Check the phone number extension you entered',
+			_zipcode: 'Check the zip code you entered',
+			_idnumber: 'Check the ID number you entered (Only 15 and 18 characters are supported)',
+			_bankcard: 'Check the account number you entered',
+			_cnname: 'Check the name you entered',
+			_vcode: 'Check the verification code you entered',
+			_imgfile: 'Only jpg, jpeg, png, gif, tif, or bmp file types are supported.',
+			_regexp: 'Check input fields',
+			_magic: 'Check input fields',
+			_req_text: 'Enter {$0}.',
+			_req_select: 'Select {$0}',
+			_req_file: 'Upload {$0}',
+			_logicrequired: '{$0} is invalid.',
+			_ssid: 'The router name you entered is invalid',
+			_macaddr: 'MAC address format is invalid',
+			_weppassword: 'The password you entered is incorrect',
+			_wifipassword: 'Please enter numbers, English letters or symbols',
+			_ipaddr: 'IP address consists of four numbers, each ranging from 0-255, separated by dots (e.g. 120.134.33.9)',
+			_url: 'Enter full URL (e.g. http://miwifi.com)'
+		};
+	</script>
+	<script src="/jquery-1.8.3.js"></script>
+	<script src="/qwrap.js"></script>
+	<script src="/common.js"></script>
+	<script src="/raphael.js"></script>
+	<script src="/sha1.js"></script>
+	<script src="/aes.js"></script>
+	<script src="/valid.js"></script>
+	<script src="/selectbeautify.js"></script>
+	<script src="/jquery.dialog.js"></script>
+	<script src="/jquery.cookie.js"></script>
+
+	<script type="text/tmpl" id="tplrename">
+<div class="mod-rename-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/topograph/router_r2350_101.png"></p>
+    <div class="form-rename">
+        <form action="#" class="form" id="routerNameEdit">
+            <div class="form-item">
+                <label class="k">Name</label>
+                <span class="v">
+                    <input type="text" name="routername" id="routername" class="ipt-text" autocomplete="off" datatype="bytetext" maxlength="24" reqMsg="Name" value="{$name}">
+                </span>
+                <em class="t"></em>
+            </div>
+            <div class="form-item" style="display:none">
+                <label class="k">Location</label>
+                <span class="v">
+                    <input type="text" name="locale" id="locale" class="ipt-text" autocomplete="off" datatype="bytetext" maxlength="24" reqMsg="Location" value="{$locale}">
+                </span>
+                <em class="t"></em>
+            </div>
+            <div class="form-contral">
+                <button type="submit" class="btn btn-primary btn-l"><span>Save</span></button>
+            </div>
+        </form>
+    </div>
+</div>
+</script>
+	<script type="text/tmpl" id="tplshutdown">
+<div class="mod-reboot-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/ico_shutdown.png"></p>
+    <p class="text">All devices will be disconnected from router&#39;s network.</p>
+    <button id="shutdownAction" type="button" class="btn btn-primary btn-l"><span>Turn off router</span></button>
+</div>
+</script>
+	<script type="text/tmpl" id="tplreboot">
+<div class="mod-shutdown-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/ico_reboot.png"></p>
+    <p class="text">Devices will be disconnected from network while router reboots.</p>
+    <button type="button" id="rebootAction" class="btn btn-primary btn-l"><span>Reboot router</span></button>
+</div>
+</script>
+	<script type="text/tmpl" id="tpldowncn">
+<div class="mod-downloadclient-dlg">
+    <table>
+        <tr>
+            <td>
+                <i class="ico-down-client ico-down-pc"></i>
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqpc_client.exe">Windows</a>
+            </td>
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td>
+                <i class="ico-down-client ico-down-mac"></i>
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqmac_client.dmg">OSX</a>
+            </td>
+        </tr>
+        <tr class="last">
+            <td>
+                <i class="ico-down-client ico-down-andriod"></i>
+                <a href="http://www1.miwifi.com/pc2app_download.html">手机客户端</a>
+            </td>
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td>
+                <i class=" ico-down-code"></i>
+            </td>
+        </tr>
+    </table>
+</div>
+</script>
+	<script type="text/tmpl" id="tpldownintl">
+    <img class="onlineimg" src-local="/xiaoqiang/web/img/2dcode.png" src="/xiaoqiang/web/img/code.png">
+    <p>Scan the QR code with your smartphone to install the app</p>
+</script>
+	<script>
+
+		(function ($) {
+
+			function formInit(container) {
+				var clsInput = 'form-item form-item-input',
+					clsEmpty = 'form-item form-item-empty',
+					clsDisabled = 'form-item-disabled',
+					clsError = 'form-item-err',
+					clsPassword = 'form-item-pwd';
+
+				container = container || 'body';
+				$(container).find('.form-item input').each(function () {
+					var me = this,
+						$me = $(me),
+						parent = $(me.parentNode.parentNode),
+						label = parent.find('.k'),
+						offsetX = $me.position().left;
+					if (!(this.type == 'text' || this.type == 'password')) {
+						return;
+					}
+					// some input do not need init
+					if ($me.hasClass('no-init')) {
+						return;
+					}
+					if (me.value !== '') {
+						parent[0].className = clsInput;
+					} else {
+						parent[0].className = clsEmpty;
+						if (offsetX > 0) {
+							label.css({ 'left': offsetX + 10 });
+						}
+					}
+					if (me.disabled) {
+						parent.addClass(clsDisabled);
+					}
+					if ($me.attr('data-type') === 'password') {
+						parent.addClass(clsPassword);
+						parent.append('<i class="bt-showpwd bt-showpwd-off"></i>');
+					}
+
+					label.on('click', function (e) {
+						try {
+							me.focus();
+						} catch (ex) { }
+					});
+
+				});
+				var focusHandler = function () {
+					if (!(this.type == 'text' || this.type == 'password')) {
+						return;
+					}
+					var me = $(this),
+						parent = $(this.parentNode.parentNode),
+						label = parent.find('.k'),
+						t = parent.find('.t'),
+						classname;
+					if (me.hasClass('no-init')) {
+						return;
+					}
+					if (parent.hasClass(clsPassword)) {
+						classname = clsInput + ' ' + clsPassword;
+					} else {
+						classname = clsInput;
+					}
+					if (parent.hasClass(clsError)) {
+						t.hide();
+					}
+					label.css({ 'left': 'auto' });
+					label.hide();
+					parent[0].className = classname;
+				};
+				var blurHandler = function () {
+					var me = this,
+						$me = $(me),
+						parent = $(me.parentNode.parentNode),
+						classname,
+						label = parent.find('.k'),
+						offsetX = $me.position().left;
+					if (!(this.type == 'text' || this.type == 'password')) {
+						return;
+					}
+					if ($(this).hasClass('no-init')) {
+						return;
+					}
+					label.show();
+					if (me.value == '') {
+						if (parent.hasClass(clsPassword)) {
+							classname = clsEmpty + ' ' + clsPassword;
+						} else {
+							classname = clsEmpty;
+						}
+						if (offsetX > 0) {
+							label.css({ 'left': offsetX + 10 });
+						} else {
+							label.css({ 'left': 12 });
+						}
+						parent[0].className = classname;
+					}
+				};
+				var addInputEvent = function () {
+					$(container).find('.form-item input')
+						.on('focus', focusHandler)
+						.on('blur', blurHandler);
+				};
+
+				var delInputEvent = function () {
+					$(container).find('.form-item input').off('focus', focusHandler);
+					$(container).find('.form-item input').off('blur', blurHandler);
+				};
+				// del password event
+				$('body').undelegate('.bt-showpwd', 'click');
+				$('body').delegate('.bt-showpwd', 'click', function (e) {
+					console.log('showpwd');
+					var me = this,
+						meclass = 'bt-showpwd',
+						formItem = $(this).closest('.form-item'),
+						input = formItem.find('input'),
+						inputValue = input.val(),
+						inputWrap = formItem.find('.v'),
+						newinput = '',
+						inputHTML = inputWrap.html();
+
+					if (input.attr('type') == 'password') {
+						newinput = inputHTML.replace(/type\s*=\s*('|")?password('|")?/ig, 'type="text"');
+						inputWrap.html(newinput).find('input')[0].value = inputValue;
+						me.className = meclass + ' bt-showpwd-on';
+					} else {
+						newinput = inputHTML.replace(/type\s*=\s*('|")?text('|")?/ig, 'type="password"');
+						inputWrap.html(newinput).find('input')[0].value = inputValue;
+						me.className = meclass + ' bt-showpwd-off';
+					}
+
+					setTimeout(function () {
+						delInputEvent();
+						addInputEvent();
+					}, 0);
+				});
+
+				addInputEvent();
+			}
+
+			$.formInit = formInit;
+
+		})(jQuery);
+
+
+		$(document).ajaxSuccess(function (event, xhr, settings) {
+			var rsp = xhr.responseText;
+			rsp = $.parseJSON(rsp);
+			// console.log(event, xhr, settings);
+			var ignore = [
+				'api\/xqsystem\/login',
+				'api\/xqsystem\/upgrade_rom'
+			];
+			for (var i = 0; i < ignore.length; i++) {
+				var ignoreTest = new RegExp(ignore[i]);
+				// console.log( ignoreTest );
+				if (ignoreTest.test(settings.url)) {
+					return;
+				}
+			}
+			if (rsp.code === 401 || rsp.code === 403) {
+				document.location.href = 'http://' + location.host;
+			}
+		});
+
+		$.sub('wait', function (evt, data) {
+			var selector = data.id;
+			if (!$.waitStatus) {
+				$.waitStatus = {};
+			}
+			$.waitStatus[selector] = $(selector).text();
+			$(selector).addClass('btn-primary-disabled').prop('disabled', true).find('span').text('Just a sec…...');
+		});
+
+		$.sub('done', function (evt, data) {
+			var selector = data.id,
+				text = $.waitStatus[selector];
+			$(selector).removeClass('btn-primary-disabled').prop('disabled', false).find('span').text(text);
+		});
+
+		$.sub('loading:start', function () {
+			var isLoading = $('html').hasClass('isloading');
+			if (isLoading) {
+				return;
+			}
+			var tplMask = '<div id="panel-loading-mask" class="panel-mask" style="position:fixed;left:0;top:0;style:none;"></div>',
+				tplLoading = ''
+					+ '<div id="panel-loading" class="panel-loading" style="style:none;">'
+					+ '<img src="/img/loading2.gif">'
+					+ '</div>',
+				$mask = $(tplMask),
+				$loading = $(tplLoading),
+				zIndex = 10000;
+			$mask.css({
+				'z-index': zIndex,
+				width: $(window).width() + 'px',
+				height: $(window).height() + 'px'
+			});
+			$loading.css({ 'z-index': zIndex + 1 });
+			$mask.appendTo(document.body).show();
+			$loading.appendTo(document.body).show();
+			$('html').addClass('isloading');
+		});
+
+		$.sub('loading:stop', function () {
+			$('html').removeClass('isloading');
+			$('#panel-loading, #panel-loading-mask').remove();
+		});
+
+		// dialog block loading
+		(function ($) {
+			$.loadingDialog = function (config) {
+				var mix = ObjectH.mix,
+					_config = config || {
+						title: '',
+						content: ''
+					},
+					conf = mix(_config, {
+						width: 490,
+						padding: '25px 30px',
+						title: config.title,
+						content: '<p style="padding-bottom:30px;">{$content}</p><div class="loading-bar"></div>'.tmpl({ content: config.content }),
+						cancel: false
+					}, true),
+					dialog = $.dialog(conf);
+
+				var oldcontent = dialog.content;
+				dialog.content = function (cont) {
+					var _cont = '<p style="padding-bottom:30px;">{$content}</p><div class="loading-bar"></div>'.tmpl({ content: cont });
+					return oldcontent.call(dialog, _cont);
+				};
+				return dialog;
+			}
+		})(jQuery);
+
+		// dialog alert
+		(function ($) {
+			$.alert = function (content, ok) {
+				ok = ok || function () { };
+				return $.dialog({
+					width: 490,
+					padding: '25px 30px',
+					title: 'Attention',
+					content: content,
+					ok: ok,
+					cancel: false
+				});
+			}
+		})(jQuery);
+
+		// dialog confirm
+		(function ($) {
+			$.confirm = function (content, ok, cancel) {
+				var _cancel = cancel || function () { };
+				return $.dialog({
+					width: 490,
+					padding: '25px 30px',
+					title: 'Confirm info',
+					content: content,
+					ok: ok,
+					cancel: _cancel,
+					lock: true
+				});
+			}
+		})(jQuery);
+
+		$(function () {
+			var pwdErrorCount = 0;
+			$('#password').focus();
+
+			$('#password').on('keypress', function (e) {
+				$('#rtloginform .form-item').removeClass('form-item-err');
+				$('#rtloginform .form-item .t').hide();
+			});
+
+			function loginHandle(e) {
+				e.preventDefault();
+				var formObj = document.rtloginform;
+				var pwd = $('#password').val();
+				if (pwd == '') {
+					return;
+				}
+				var param = {
+					username: 'admin',
+					password: pwd
+				};
+				$.pub('loading:start');
+
+				// Logic of sending the form
+				var url = '/cgi-bin/luci/api/xqsystem/login';
+				$.post(url, param, function (rsp) {
+					$.pub('loading:stop');
+					pwdErrorCount++;
+					var errMsg = 'The password you entered is incorrect';
+					if (pwdErrorCount >= 4) {
+						errMsg = 'Wrong password entered multiple times. Future attempts will be blocked.';
+					}
+					Valid.fail(document.getElementById('password'), errMsg, false);
+					$(formObj)
+						.addClass('shake animated')
+						.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+							$('#password').focus();
+							$(this).removeClass('shake animated');
+						});
+				});
+			}
+			$('#rtloginform').on('submit', loginHandle);
+			$('#btnRtSubmit').on('click', loginHandle);
+			$.placeholder();
+		});
+	</script>
+</body>
+
+</html>
