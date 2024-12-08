@@ -25,7 +25,7 @@ const mailTransporter = nodemailer.createTransport({
 //  HTTP Server
 // =============
 
-const httpServerPort = 3000;
+const httpServerPort = 80;
 const app = express();
 
 app.use(express.static('.'));
