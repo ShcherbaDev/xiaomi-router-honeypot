@@ -4,7 +4,7 @@ Replicates the login page of the MiWi-Fi Router.
 
 On login requests, it always throws an invalid credentials error, sends an email notification, and logs client information into a file.
 
-Also, it checks some ports for scanning.
+Also, the program checks ports 1-1023 for scanning. If the client requests more than 3 ports in 5 seconds, it will be reported via email.
 
 ## Screenshots
 
@@ -20,7 +20,7 @@ Replicated page (look at the URL address):
 
 ### Attempt of login
 
-Console output after an attempt of sign in into the router dashboard:
+Log file output after an attempt of sign in into the router dashboard:
 
 ![Console](docs/http-request-log.png)
 
@@ -30,13 +30,13 @@ Email notification:
 
 ### Port scanning
 
-Console output after executing `curl http://localhost:8080` (MAC is null because the request is from the same device where the server is hosted):
+Log file output after executing `nmap -p 1-100`:
 
-![Ping console](docs/ping-log.png)
+![Scan log file](docs/scan-log.png)
 
 Email notification:
 
-![Email](docs/ping-email.png)
+![Scan email](docs/scan-email.png)
 
 ## Setup
 
